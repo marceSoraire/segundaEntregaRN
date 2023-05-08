@@ -1,78 +1,47 @@
 import { useState } from 'react';
-import { View, Text, TextInput, Button, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
+import { View, Text, Button, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import { styles } from './styles';
 import { Card, NumerContainer } from '../../components/index';
 import { theme } from '../../constants';
+import Posters from '../../components/posters';
 
 const StartGame =({ onStart })=> {
 
     const [ number, setNumber ] = useState('');
-    const [ selected, setSelected ] = useState(null);
     const [ confirmed, setConfirmed ] = useState(false);
 
-    const onHandlerChangeText =(text)=>{
-        setNumber(text.replace(/[aA-zZ]/g, ''));
-    }
+    const hanldeConfirmed =()=> setConfirmed(!confirmed);
+    const hanldeAdd =(countTotal)=> setNumber(countTotal);
+    const handleStart =()=> onStart(number)
 
-    const hanldeConfirmed =()=> {
-        const choseNumbre = Number(number);
-        if (isNaN(choseNumbre) || choseNumbre <= 0 || choseNumbre > 99) {
-            Alert.alert('Numero invalido', 'el numero esperado debe ser entre 1 y 99', [
-                {text: 'Okay', style: 'destructive', onPress: ()=> setNumber('')},
-            ])
-        } else {
-            setConfirmed(true);
-            setSelected(choseNumbre);
-            setNumber('');
-        }
-    }
-
-    const hanldeReset =()=> {
+    const hanldeCancel =()=> {
         setNumber('');
-        setSelected(null);
         setConfirmed(false)
     }
 
-    const handleStart =()=> onStart(selected)
-
     const Confirmed = () => confirmed ? (
         <Card style={styles.confirmedContainer}>
-            <Text style={styles.confirmedTitle}>Numero seleccionado</Text>
-            <NumerContainer number={selected}/>
-            <Button title='Start Game' onPress={handleStart} color={theme.colors.grey}/>
+            <Text style={styles.confirmedTitle}>Desea comprar los seguientes Cds?</Text>
+            <NumerContainer number={number}/>
+            <View style={styles.btnConfirm}>
+                <Button title='Cancelar' onPress={hanldeCancel} color={theme.colors.danger}/>
+                <Button title='Confirmar' onPress={handleStart} color={theme.colors.primary}/>
+            </View>
         </Card>
     ) : null;
 
     return (
         <TouchableWithoutFeedback onPress={()=> Keyboard.dismiss()}>
             <View style={styles.startContainer}>
-                <Text style={styles.title}>Start Game</Text>
-                <Card style={styles.inputContainer}>
-                    <Text style={styles.label}>Elije un numero</Text>
-                    <TextInput 
-                        placeholder='0'
-                        style={styles.input}
-                        keyboardType='number-pad'
-                        maxLength={2}
-                        autoCapitalize='none'
-                        autoCorrect={false}
-                        blurOnSubmit 
-                        onChangeText={onHandlerChangeText}
-                        value={number}
-                    />
-                    <View style={styles.buttonContainer}>
-                        <Button
-                            title='Reset'
-                            onPress={hanldeReset}
-                            color={theme.colors.danger}
-                        />
-                        <Button
-                            title='Confrimar'
-                            onPress={hanldeConfirmed}
-                            color={theme.colors.secondary}
-                        />
-                    </View>
-                </Card>
+                <Text style={styles.title}>Arte Infernal</Text>
+                <View style={styles.cdsContainer}>
+                    <Posters hanldeAdd={hanldeAdd}/>
+                </View>
+                <Button
+                    title='Confrimar'
+                    onPress={hanldeConfirmed}
+                    color={theme.colors.secondary}
+                />
                 <Confirmed/>
             </View>
         </TouchableWithoutFeedback>

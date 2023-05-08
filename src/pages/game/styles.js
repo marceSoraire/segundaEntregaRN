@@ -11,7 +11,8 @@ export const styles = StyleSheet.create({
         marginHorizontal: 20,
     },
     title:{
-        fontSize: 20,
+        fontSize: 17,
+        fontFamily: 'italic',
     },
     buttonContainer:{
         width: '100%',

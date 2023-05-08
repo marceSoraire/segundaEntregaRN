@@ -5,15 +5,15 @@ export const styles = StyleSheet.create ({
     container: {
         width: 60,
         height: 60,
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         alignItems: "center",
-        backgroundColor: theme.colors.fondo,
+        backgroundColor: theme.colors.grey,
         borderWith: 2,
         borderRadius: 5,
         marginVertical: 10,
     },
     numer: {
-        fontSize: 20,
-        fontWeight: 'bold',
+        fontSize: 25,
+        fontFamily: 'bold',
     },
 })

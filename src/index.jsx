@@ -1,4 +1,4 @@
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, ScrollView, View } from "react-native";
 import { styles } from "./styles";
 import { Game, StartGame } from "./pages";
 import { Header } from "./components";
@@ -30,12 +30,14 @@ export default function App () {
 
     const onStart =(number) => setUserNumber(number);
     const Content =()=> ( userNumber ? <Game userNumber={userNumber}/> : <StartGame onStart={onStart}/> )
-    const headerTitle = userNumber ? 'Adivina el Numero' : 'Bienvenidos';
+    const headerTitle = userNumber ? 'Compra Exitosa' : 'Bienvenidos';
 
     return(
         <View style={styles.container}>
-            <Header title={headerTitle}/>
-            <Content/>
+            <ScrollView>
+                <Header title={headerTitle}/>
+                <Content/>
+            </ScrollView>
         </View>
     )
 }
